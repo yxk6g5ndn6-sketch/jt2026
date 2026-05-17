@@ -258,6 +258,7 @@ footer p{font-style:italic;font-size:13px;color:var(--dim);}
   </div>
 </div>
 <audio id="audio" loop crossorigin="anonymous">
+  <source src="https://stream.zeno.fm/f3wvbbqmdg8uv" type="audio/mpeg">
   <source src="https://stream.zeno.fm/yn62fuuqp8zuv" type="audio/mpeg">
 </audio>
 
@@ -581,52 +582,54 @@ function startFlight(){
   fs.style.display='flex'; fs.style.opacity='1';
   const canvas=document.getElementById('flightCanvas');
   const ctx=canvas.getContext('2d');
-  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-  const W=canvas.width, H=canvas.height;
 
-  // City positions — Australia only + Japan
-  const PERTH  = {x:W*0.195, y:H*0.72,  label:'Perth,\nAustralia'};
-  const SYDNEY = {x:W*0.255, y:H*0.745, label:'Sydney,\nAustralia'};
-  const TOKYO  = {x:W*0.82,  y:H*0.30,  label:'Tokyo,\nJapan'};
+  function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const isMobile = window.innerWidth < 600;
+
+  function getW(){ return canvas.width; }
+  function getH(){ return canvas.height; }
 
   // Trail storage
   const trailP=[], trailS=[];
 
   function drawMap(){
+    const W=getW(), H=getH();
     ctx.clearRect(0,0,W,H);
-    // Ocean
     const bg=ctx.createLinearGradient(0,0,W,H);
     bg.addColorStop(0,'#060e1e'); bg.addColorStop(1,'#0a1628');
     ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-    // Latitude grid
     ctx.strokeStyle='rgba(80,140,220,.05)'; ctx.lineWidth=.8;
     for(let i=0;i<H;i+=H/10){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke();}
     for(let i=0;i<W;i+=W/16){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke();}
 
-    // Draw simplified landmasses — only Australia and Japan for focus
+    // On mobile, shift map left so Australia is visible
+    const xOff = isMobile ? -W*0.08 : 0;
+
     ctx.fillStyle='rgba(20,38,60,.9)';
     ctx.strokeStyle='rgba(60,110,180,.2)'; ctx.lineWidth=1;
-
-    // Australia - rough outline
     ctx.beginPath();
-    ctx.moveTo(W*.15,H*.65);
-    ctx.bezierCurveTo(W*.17,H*.60,W*.22,H*.58,W*.27,H*.60);
-    ctx.bezierCurveTo(W*.32,H*.62,W*.34,H*.65,W*.33,H*.70);
-    ctx.bezierCurveTo(W*.32,H*.76,W*.28,H*.80,W*.26,H*.82);
-    ctx.bezierCurveTo(W*.22,H*.83,W*.18,H*.80,W*.16,H*.76);
-    ctx.bezierCurveTo(W*.13,H*.72,W*.13,H*.68,W*.15,H*.65);
+    ctx.moveTo(W*.15+xOff,H*.65);
+    ctx.bezierCurveTo(W*.17+xOff,H*.60,W*.22+xOff,H*.58,W*.27+xOff,H*.60);
+    ctx.bezierCurveTo(W*.32+xOff,H*.62,W*.34+xOff,H*.65,W*.33+xOff,H*.70);
+    ctx.bezierCurveTo(W*.32+xOff,H*.76,W*.28+xOff,H*.80,W*.26+xOff,H*.82);
+    ctx.bezierCurveTo(W*.22+xOff,H*.83,W*.18+xOff,H*.80,W*.16+xOff,H*.76);
+    ctx.bezierCurveTo(W*.13+xOff,H*.72,W*.13+xOff,H*.68,W*.15+xOff,H*.65);
     ctx.fill(); ctx.stroke();
 
-    // Western Australia highlight (Perth side)
     ctx.fillStyle='rgba(25,45,72,.6)';
     ctx.beginPath();
-    ctx.moveTo(W*.15,H*.65);
-    ctx.bezierCurveTo(W*.17,H*.60,W*.21,H*.59,W*.22,H*.63);
-    ctx.bezierCurveTo(W*.22,H*.70,W*.20,H*.78,W*.18,H*.79);
-    ctx.bezierCurveTo(W*.16,H*.78,W*.14,H*.74,W*.15,H*.65);
+    ctx.moveTo(W*.15+xOff,H*.65);
+    ctx.bezierCurveTo(W*.17+xOff,H*.60,W*.21+xOff,H*.59,W*.22+xOff,H*.63);
+    ctx.bezierCurveTo(W*.22+xOff,H*.70,W*.20+xOff,H*.78,W*.18+xOff,H*.79);
+    ctx.bezierCurveTo(W*.16+xOff,H*.78,W*.14+xOff,H*.74,W*.15+xOff,H*.65);
     ctx.fill();
 
-    // Japan - elongated island chain
     ctx.fillStyle='rgba(20,38,60,.9)';
     ctx.strokeStyle='rgba(60,110,180,.2)';
     ctx.beginPath();
@@ -635,12 +638,10 @@ function startFlight(){
     ctx.beginPath();
     ctx.ellipse(W*.80,H*.35,W*.008,H*.03,-.2,0,Math.PI*2);
     ctx.fill(); ctx.stroke();
-    // Hokkaido
     ctx.beginPath();
     ctx.ellipse(W*.835,H*.21,W*.015,H*.025,-.1,0,Math.PI*2);
     ctx.fill(); ctx.stroke();
 
-    // Asian continent edge (faint)
     ctx.fillStyle='rgba(18,34,55,.7)';
     ctx.beginPath();
     ctx.moveTo(W*.70,H*0);
@@ -648,36 +649,147 @@ function startFlight(){
     ctx.bezierCurveTo(W*.78,H*.25,W*.74,H*.28,W*.70,H*.30);
     ctx.lineTo(W*.65,H*.25); ctx.lineTo(W*.65,H*0);
     ctx.fill();
-
-    // SE Asia faint
-    ctx.fillStyle='rgba(18,34,55,.5)';
-    ctx.beginPath();
-    ctx.ellipse(W*.64,H*.52,W*.04,H*.06,0,0,Math.PI*2);
-    ctx.fill();
   }
 
   function lerp(a,b,t){return a+(b-a)*t;}
   function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+  function bezierPt(p0,cp,p1,t){const t1=1-t;return {x:t1*t1*p0.x+2*t1*t*cp.x+t*t*p1.x, y:t1*t1*p0.y+2*t1*t*cp.y+t*t*p1.y};}
 
-  function bezierPt(p0,cp,p1,t){
-    const t1=1-t;
-    return {x:t1*t1*p0.x+2*t1*t*cp.x+t*t*p1.x, y:t1*t1*p0.y+2*t1*t*cp.y+t*t*p1.y};
+  function getCities(){
+    const W=getW(), H=getH();
+    const xOff = isMobile ? -W*0.08 : 0;
+    return {
+      PERTH:  {x:W*0.195+xOff, y:H*0.72,  label:'Perth,\nAustralia'},
+      SYDNEY: {x:W*0.255+xOff, y:H*0.745, label:'Sydney,\nAustralia'},
+      TOKYO:  {x:W*0.82,       y:H*0.30,  label:'Tokyo,\nJapan'}
+    };
   }
 
-  // Control points for arcs
-  const cpPerth  = {x:lerp(PERTH.x,TOKYO.x,.4),  y:lerp(PERTH.y,TOKYO.y,.5)-H*.22};
-  const cpSydney = {x:lerp(SYDNEY.x,TOKYO.x,.5),  y:lerp(SYDNEY.y,TOKYO.y,.5)-H*.25};
+  const planeScale = isMobile ? 0.7 : 1;
 
   function drawPlane(x,y,angle,color){
+    const s=planeScale;
     ctx.save();
     ctx.translate(x,y); ctx.rotate(angle);
     ctx.shadowColor=color; ctx.shadowBlur=14;
     ctx.fillStyle='white';
-    // Body
-    ctx.beginPath(); ctx.moveTo(11,0); ctx.lineTo(-7,4); ctx.lineTo(-5,0); ctx.lineTo(-7,-4); ctx.closePath(); ctx.fill();
-    // Wings
-    ctx.beginPath(); ctx.moveTo(2,-1); ctx.lineTo(-2,-8); ctx.lineTo(-5,-7); ctx.lineTo(-4,-1); ctx.closePath(); ctx.fill();
-    ctx.beginPath(); ctx.moveTo(2,1); ctx.lineTo(-2,8); ctx.lineTo(-5,7); ctx.lineTo(-4,1); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(11*s,0); ctx.lineTo(-7*s,4*s); ctx.lineTo(-5*s,0); ctx.lineTo(-7*s,-4*s); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(2*s,-1*s); ctx.lineTo(-2*s,-8*s); ctx.lineTo(-5*s,-7*s); ctx.lineTo(-4*s,-1*s); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(2*s,1*s); ctx.lineTo(-2*s,8*s); ctx.lineTo(-5*s,7*s); ctx.lineTo(-4*s,1*s); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(-5*s,0); ctx.lineTo(-8*s,-4*s); ctx.lineTo(-7*s,0); ctx.lineTo(-8*s,4*s); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawTrail(trail,color){
+    if(trail.length<2) return;
+    for(let i=1;i<trail.length;i++){
+      const alpha=Math.min((i/trail.length)*0.6,0.4);
+      ctx.strokeStyle=color.replace('1)',`${alpha})`);
+      ctx.lineWidth=1.2; ctx.setLineDash([3,5]);
+      ctx.beginPath(); ctx.moveTo(trail[i-1].x,trail[i-1].y); ctx.lineTo(trail[i].x,trail[i].y); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  function drawCity(city,alpha,active){
+    if(alpha<=0) return;
+    if(active){
+      const gr=ctx.createRadialGradient(city.x,city.y,0,city.x,city.y,20);
+      gr.addColorStop(0,`rgba(201,165,80,${.4*alpha})`);
+      gr.addColorStop(1,'rgba(201,165,80,0)');
+      ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(city.x,city.y,20,0,Math.PI*2); ctx.fill();
+    }
+    ctx.fillStyle=`rgba(201,165,80,${alpha})`;
+    ctx.beginPath(); ctx.arc(city.x,city.y,3.5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='white'; ctx.beginPath(); ctx.arc(city.x,city.y,1.8,0,Math.PI*2); ctx.fill();
+    const W=getW();
+    const fSize=Math.max(W*(isMobile?0.025:0.009),isMobile?11:9);
+    ctx.font=`${fSize}px 'Zen Kaku Gothic New',sans-serif`;
+    ctx.fillStyle=`rgba(201,165,80,${alpha})`;
+    const lines=city.label.split('\n');
+    lines.forEach((line,i)=>{ctx.fillText(line,city.x+8,city.y-6+i*(fSize+3));});
+  }
+
+  const DUR=6000;
+  let startT=null;
+
+  function frame(ts){
+    if(flightDone) return;
+    if(!startT) startT=ts;
+    const p=Math.min((ts-startT)/DUR,1);
+    const W=getW(), H=getH();
+    const {PERTH,SYDNEY,TOKYO}=getCities();
+    const cpPerth={x:lerp(PERTH.x,TOKYO.x,.4),y:lerp(PERTH.y,TOKYO.y,.5)-H*.22};
+    const cpSydney={x:lerp(SYDNEY.x,TOKYO.x,.5),y:lerp(SYDNEY.y,TOKYO.y,.5)-H*.25};
+
+    drawMap();
+
+    const mapAlpha=Math.min(p/.1,1);
+    const perthAlpha=Math.min(Math.max((p-.05)/.1,0),1);
+    const sydAlpha=Math.min(Math.max((p-.08)/.1,0),1);
+    const tokyoAlpha=p>.65?Math.min((p-.65)/.1,1):0;
+    const tokyoActive=p>.75;
+
+    let perthPt,sydPt,perthAngle=0,sydAngle=0;
+    if(p<0.15){
+      perthPt={x:PERTH.x,y:PERTH.y};
+      sydPt={x:SYDNEY.x,y:SYDNEY.y};
+    } else {
+      const t=ease(Math.min((p-.15)/.6,1));
+      perthPt=bezierPt(PERTH,cpPerth,TOKYO,t);
+      sydPt=bezierPt(SYDNEY,cpSydney,TOKYO,t);
+      const dt=.01;
+      const tp1=bezierPt(PERTH,cpPerth,TOKYO,Math.min(t+dt,1));
+      const ts1=bezierPt(SYDNEY,cpSydney,TOKYO,Math.min(t+dt,1));
+      perthAngle=Math.atan2(tp1.y-perthPt.y,tp1.x-perthPt.x);
+      sydAngle=Math.atan2(ts1.y-sydPt.y,ts1.x-sydPt.x);
+      if(t>0&&t<1){
+        if(!trailP.length||Math.hypot(perthPt.x-trailP[trailP.length-1].x,perthPt.y-trailP[trailP.length-1].y)>5) trailP.push({...perthPt});
+        if(!trailS.length||Math.hypot(sydPt.x-trailS[trailS.length-1].x,sydPt.y-trailS[trailS.length-1].y)>5) trailS.push({...sydPt});
+      }
+    }
+
+    drawTrail(trailP,'rgba(201,165,80,1)');
+    drawTrail(trailS,'rgba(130,200,255,1)');
+    drawCity(PERTH,perthAlpha*mapAlpha,p<.65);
+    drawCity(SYDNEY,sydAlpha*mapAlpha,p<.65);
+    drawCity(TOKYO,tokyoAlpha,tokyoActive);
+    if(p>.13) drawPlane(perthPt.x,perthPt.y,perthAngle,'rgba(201,165,80,.8)');
+    if(p>.14) drawPlane(sydPt.x,sydPt.y,sydAngle,'rgba(130,200,255,.8)');
+
+    if(p>.12){
+      const la=Math.min((p-.12)/.08,1);
+      const fSize=Math.max(W*(isMobile?0.022:0.008),isMobile?10:8);
+      ctx.font=`${fSize}px 'Zen Kaku Gothic New',sans-serif`;
+      ctx.fillStyle=`rgba(201,165,80,${la*.8})`;
+      ctx.fillText('— Perth guests',W*.04,H*.92);
+      ctx.fillStyle=`rgba(130,200,255,${la*.8})`;
+      ctx.fillText('— Sydney guests',W*.04,H*.96);
+    }
+
+    if(p>.86){
+      const ta=Math.min((p-.86)/.1,1);
+      ctx.save(); ctx.globalAlpha=ta; ctx.textAlign='center';
+      const f1=Math.max(W*(isMobile?.032:.013),isMobile?13:10);
+      const f2=Math.max(W*(isMobile?.072:.038),isMobile?28:20);
+      const f3=Math.max(W*(isMobile?.02:.009),isMobile?9:8);
+      ctx.font=`${f1}px 'EB Garamond',serif`;
+      ctx.fillStyle='rgba(201,165,80,.9)';
+      ctx.fillText("We're getting married in",W/2,H*(isMobile?.28:.32));
+      ctx.font=`${f2}px 'Shippori Mincho',serif`;
+      ctx.fillStyle='white';
+      ctx.fillText('Tokyo',W/2,H*(isMobile?.38:.40));
+      ctx.font=`${f3}px 'Zen Kaku Gothic New',sans-serif`;
+      ctx.fillStyle='rgba(201,165,80,.7)';
+      ctx.fillText('5 NOVEMBER 2026',W/2,H*(isMobile?.45:.45));
+      ctx.textAlign='left'; ctx.restore();
+    }
+
+    if(p>=1){setTimeout(endFlight,700);flightDone=true;return;}
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
     // Tail
     ctx.beginPath(); ctx.moveTo(-5,0); ctx.lineTo(-8,-4); ctx.lineTo(-7,0); ctx.lineTo(-8,4); ctx.closePath(); ctx.fill();
     ctx.restore();
