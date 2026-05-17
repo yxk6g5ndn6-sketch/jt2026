@@ -6,502 +6,880 @@
 <title>Jake & Taylor — Tokyo Wedding</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --burgundy: #6b1f2a;
-    --burgundy-deep: #4a1219;
-    --cream: #f5ede0;
-    --gold: #c9a550;
-    --gold-light: #e0c070;
-    --text: #f0e6d3;
-    --text-muted: #c4a882;
-    --text-dim: #9a7e60;
-    --card: #5a1825;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--burgundy-deep); color: var(--text); font-family: 'EB Garamond', Georgia, serif; overflow-x: hidden; }
-  #mainContent { display: block; }
-  .splash { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; text-align: center; padding: 80px 32px 100px; background: linear-gradient(160deg, #4a1219 0%, #6b1f2a 50%, #3d0f15 100%); }
-  .splash::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events: none; }
-  .petals { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
-  .petal { position: absolute; top: -50px; opacity: 0; animation: leafFall linear infinite; }
-  .petal svg { display: block; }
-  @keyframes leafFall { 0% { transform: translateY(0) rotate(0deg) translateX(0px); opacity: 0; } 5% { opacity: 0.7; } 50% { transform: translateY(50vh) rotate(180deg) translateX(40px); } 90% { opacity: 0.4; } 100% { transform: translateY(110vh) rotate(400deg) translateX(-20px); opacity: 0; } }
-  .petal:nth-child(1) { left: 7%; animation-duration: 10s; animation-delay: 0s; width: 18px; }
-  .petal:nth-child(2) { left: 17%; animation-duration: 13s; animation-delay: 1.8s; width: 13px; }
-  .petal:nth-child(3) { left: 28%; animation-duration: 9s; animation-delay: 3.2s; width: 20px; }
-  .petal:nth-child(4) { left: 40%; animation-duration: 12s; animation-delay: 0.6s; width: 14px; }
-  .petal:nth-child(5) { left: 53%; animation-duration: 11s; animation-delay: 2.5s; width: 16px; }
-  .petal:nth-child(6) { left: 63%; animation-duration: 14s; animation-delay: 0.2s; width: 11px; }
-  .petal:nth-child(7) { left: 73%; animation-duration: 10s; animation-delay: 4.1s; width: 19px; }
-  .petal:nth-child(8) { left: 84%; animation-duration: 12s; animation-delay: 1.2s; width: 13px; }
-  .petal:nth-child(9) { left: 23%; animation-duration: 15s; animation-delay: 5.5s; width: 15px; }
-  .petal:nth-child(10) { left: 91%; animation-duration: 11s; animation-delay: 3s; width: 17px; }
-  .splash-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-  .splash-tag { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 10px; letter-spacing: 0.6em; text-transform: uppercase; color: var(--gold); margin-bottom: 40px; opacity: 0; animation: fadeUp 1s ease 0.2s forwards; }
-  .splash-names { font-family: 'Shippori Mincho', serif; font-size: clamp(42px, 9vw, 82px); font-weight: 500; letter-spacing: 0.05em; line-height: 1.1; color: var(--cream); opacity: 0; animation: fadeUp 1.3s cubic-bezier(0.16,1,0.3,1) 0.5s forwards; margin-bottom: 8px; }
-  .splash-amp { font-family: 'EB Garamond', serif; font-style: italic; color: var(--gold-light); font-size: 0.85em; }
-  .splash-married { font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(16px, 2.5vw, 22px); color: var(--text-muted); letter-spacing: 0.05em; opacity: 0; animation: fadeUp 1s ease 0.8s forwards; margin-bottom: 36px; }
-  .splash-married strong { font-style: normal; color: var(--cream); font-family: 'Shippori Mincho', serif; }
-  .splash-rule { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); opacity: 0; animation: fadeUp 1s ease 1s forwards; margin-bottom: 36px; }
-  .countdown { display: flex; gap: 24px; align-items: center; opacity: 0; animation: fadeUp 1s ease 1.1s forwards; margin-bottom: 48px; }
-  .countdown-unit { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .countdown-num { font-family: 'Shippori Mincho', serif; font-size: clamp(32px, 6vw, 52px); color: var(--cream); line-height: 1; min-width: 60px; text-align: center; }
-  .countdown-lbl { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 8px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--text-dim); }
-  .countdown-sep { font-family: 'Shippori Mincho', serif; font-size: 32px; color: var(--gold); opacity: 0.4; margin-bottom: 14px; align-self: flex-start; padding-top: 6px; }
-  .splash-meta { display: flex; align-items: center; gap: 20px; opacity: 0; animation: fadeUp 1s ease 1.2s forwards; margin-bottom: 48px; }
-  .splash-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .splash-meta-item .val { font-family: 'Shippori Mincho', serif; font-size: clamp(16px, 2.5vw, 22px); color: var(--cream); }
-  .splash-meta-item .lbl { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--text-dim); }
-  .splash-meta-dot { width: 4px; height: 4px; background: var(--gold); opacity: 0.4; border-radius: 50%; align-self: center; flex-shrink: 0; }
-  .splash-purpose { max-width: 460px; background: rgba(0,0,0,0.2); border: 1px solid rgba(201,165,80,0.2); border-left: 2px solid var(--gold); padding: 20px 24px; text-align: left; opacity: 0; animation: fadeUp 1s ease 1.3s forwards; margin-bottom: 44px; }
-  .splash-purpose p { font-size: clamp(14px, 1.8vw, 16px); line-height: 1.8; color: var(--text-muted); font-style: italic; }
-  .splash-purpose strong { font-style: normal; color: var(--cream); }
-  .splash-cta { opacity: 0; animation: fadeUp 1s ease 1.5s forwards; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .splash-cta a { display: inline-block; background: var(--gold); color: var(--burgundy-deep); font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase; text-decoration: none; padding: 16px 40px; transition: background 0.3s ease; }
-  .splash-cta a:hover { background: var(--gold-light); }
-  .splash-cta-note { font-size: 12px; font-style: italic; color: var(--text-dim); }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .parallax-wrap { position: relative; height: 260px; overflow: hidden; }
-  .parallax-img { position: absolute; top: -30%; left: 0; width: 100%; height: 160%; object-fit: cover; filter: brightness(0.6) saturate(0.75); will-change: transform; }
-  .parallax-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(61,15,21,0.3) 0%, rgba(61,15,21,0.7) 100%); }
-  .content-wrap { background: #3d0f15; }
-  .container { max-width: 860px; margin: 0 auto; padding: clamp(48px, 7vw, 90px) clamp(24px, 6vw, 72px); }
-  .divider { max-width: 860px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 72px); height: 1px; background: linear-gradient(to right, transparent, rgba(201,165,80,0.25), transparent); }
-  .day-block { margin-bottom: 0; }
-  .day-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid rgba(201,165,80,0.15); }
-  .day-num { font-family: 'Shippori Mincho', serif; font-size: clamp(52px, 9vw, 84px); font-weight: 600; line-height: 1; opacity: 0.1; color: var(--cream); flex-shrink: 0; }
-  .day-meta { display: flex; flex-direction: column; gap: 4px; }
-  .day-date-tag { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 10px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); }
-  .day-title { font-family: 'Shippori Mincho', serif; font-size: clamp(22px, 4vw, 32px); font-weight: 500; color: var(--cream); }
-  .day-intro { font-size: clamp(15px, 1.8vw, 17px); font-style: italic; color: var(--text-muted); line-height: 1.75; margin-bottom: 24px; max-width: 580px; }
-  .event-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .event-item { display: flex; gap: 20px; align-items: flex-start; padding: 18px 20px; border-left: 2px solid rgba(201,165,80,0.25); background: rgba(0,0,0,0.2); transition: border-color 0.25s ease, background 0.25s ease; }
-  .event-item:hover { border-left-color: var(--gold); background: rgba(0,0,0,0.3); }
-  .event-item.hosted { border-left-color: var(--gold); }
-  .event-item.free { border-left-color: rgba(255,255,255,0.1); }
-  .event-time { font-family: 'Shippori Mincho', serif; font-size: 18px; color: var(--gold); white-space: nowrap; min-width: 60px; flex-shrink: 0; }
-  .event-body { display: flex; flex-direction: column; gap: 5px; }
-  .event-badge { display: inline-block; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 8px; letter-spacing: 0.4em; text-transform: uppercase; padding: 3px 8px; align-self: flex-start; }
-  .badge-hosted { background: rgba(201,165,80,0.12); color: var(--gold); border: 1px solid rgba(201,165,80,0.3); }
-  .badge-free { background: rgba(255,255,255,0.04); color: var(--text-dim); border: 1px solid rgba(255,255,255,0.08); }
-  .event-name { font-family: 'Shippori Mincho', serif; font-size: 16px; font-weight: 500; color: var(--cream); }
-  .event-detail { font-size: 14px; font-style: italic; color: var(--text-muted); line-height: 1.7; }
-  .map-pin { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; border-bottom: 1px solid rgba(154,126,96,0.3); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
-  .map-pin:hover { color: var(--gold); border-color: var(--gold); }
-  .rsvp-section { background: linear-gradient(160deg, #5a1825 0%, #6b1f2a 100%); position: relative; overflow: hidden; border-top: 1px solid rgba(201,165,80,0.2); }
-  .rsvp-inner { max-width: 860px; margin: 0 auto; padding: clamp(56px, 8vw, 100px) clamp(24px, 6vw, 72px); position: relative; z-index: 1; }
-  .rsvp-top { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: start; margin-bottom: 44px; }
-  @media (max-width: 620px) { .rsvp-top { grid-template-columns: 1fr; gap: 28px; } }
-  .rsvp-heading { font-family: 'Shippori Mincho', serif; font-size: clamp(26px, 5vw, 42px); font-weight: 500; color: var(--cream); line-height: 1.2; margin-bottom: 14px; }
-  .rsvp-why { font-size: clamp(14px, 1.8vw, 16px); line-height: 1.85; color: var(--text-muted); font-style: italic; }
-  .rsvp-why strong { color: var(--cream); font-style: normal; }
-  .rsvp-urgency { border: 1px solid rgba(201,165,80,0.3); background: rgba(0,0,0,0.15); padding: 28px 24px; text-align: center; }
-  .rsvp-urgency-label { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 9px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-  .rsvp-urgency-date { font-family: 'Shippori Mincho', serif; font-size: clamp(20px, 3.5vw, 30px); color: var(--cream); line-height: 1.3; margin-bottom: 10px; }
-  .rsvp-urgency-sub { font-size: 13px; font-style: italic; color: var(--text-muted); line-height: 1.6; }
-  .rsvp-form { display: flex; flex-direction: column; gap: 12px; }
-  .rsvp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 500px) { .rsvp-row { grid-template-columns: 1fr; } }
-  .rsvp-input { background: rgba(255,255,255,0.07); border: 1px solid rgba(201,165,80,0.2); color: var(--cream); font-family: 'EB Garamond', serif; font-size: 16px; padding: 13px 16px; outline: none; transition: border-color 0.3s, background 0.3s; width: 100%; }
-  .rsvp-input::placeholder { color: rgba(240,230,211,0.3); font-style: italic; }
-  .rsvp-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
-  .rsvp-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a550' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; cursor: pointer; }
-  .rsvp-select option { background: #4a1219; color: var(--cream); }
-  .rsvp-btn { background: var(--gold); border: none; color: var(--burgundy-deep); font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 11px; letter-spacing: 0.5em; padding: 16px 36px; cursor: pointer; transition: background 0.3s ease; text-transform: uppercase; align-self: flex-start; margin-top: 4px; }
-  .rsvp-btn:hover { background: var(--gold-light); }
-  .rsvp-confirm { display: none; flex-direction: column; gap: 12px; }
-  .rsvp-confirm.visible { display: flex; animation: fadeUp 0.8s ease forwards; }
-  .confirm-kanji { font-family: 'Shippori Mincho', serif; font-size: 60px; color: var(--gold); }
-  .confirm-text { font-style: italic; color: var(--text-muted); font-size: 18px; line-height: 1.6; }
-  .lofi-player { position: fixed; bottom: 24px; right: 24px; z-index: 100; display: flex; align-items: center; gap: 10px; background: rgba(74,18,25,0.92); border: 1px solid rgba(201,165,80,0.25); padding: 10px 16px; backdrop-filter: blur(10px); }
-  .lofi-btn { width: 32px; height: 32px; border: 1px solid rgba(201,165,80,0.4); background: transparent; color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; font-size: 14px; }
-  .lofi-btn:hover { background: rgba(201,165,80,0.1); }
-  .lofi-info { display: flex; flex-direction: column; gap: 2px; }
-  .lofi-title { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
-  .lofi-sub { font-family: 'EB Garamond', serif; font-style: italic; font-size: 11px; color: var(--text-dim); }
-  .lofi-bars { display: flex; align-items: flex-end; gap: 2px; height: 16px; }
-  .lofi-bar { width: 3px; background: var(--gold); opacity: 0.6; border-radius: 1px; animation: barBounce 0.8s ease-in-out infinite alternate; }
-  .lofi-bar:nth-child(1) { height: 6px; animation-delay: 0s; }
-  .lofi-bar:nth-child(2) { height: 12px; animation-delay: 0.15s; }
-  .lofi-bar:nth-child(3) { height: 8px; animation-delay: 0.3s; }
-  .lofi-bar:nth-child(4) { height: 14px; animation-delay: 0.1s; }
-  .lofi-bar:nth-child(5) { height: 5px; animation-delay: 0.25s; }
-  @keyframes barBounce { from { transform: scaleY(0.4); opacity: 0.4; } to { transform: scaleY(1); opacity: 0.8; } }
-  .lofi-bars.paused .lofi-bar { animation-play-state: paused; }
-  .weather-section { background: rgba(0,0,0,0.15); border-top: 1px solid rgba(201,165,80,0.12); border-bottom: 1px solid rgba(201,165,80,0.12); }
-  .weather-inner { max-width: 860px; margin: 0 auto; padding: clamp(40px, 6vw, 72px) clamp(24px, 6vw, 72px); }
-  .weather-heading { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; display: flex; align-items: center; gap: 12px; }
-  .weather-heading::after { content: ''; flex: 1; height: 1px; background: rgba(201,165,80,0.2); }
-  .weather-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .weather-card { background: rgba(0,0,0,0.2); border: 1px solid rgba(201,165,80,0.12); padding: 20px 16px; text-align: center; transition: border-color 0.3s; }
-  .weather-card:hover { border-color: rgba(201,165,80,0.3); }
-  .weather-icon { font-size: 28px; margin-bottom: 10px; display: block; }
-  .weather-stat { font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 3vw, 26px); color: var(--cream); display: block; margin-bottom: 4px; }
-  .weather-lbl { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--text-dim); display: block; }
-  .weather-note { margin-top: 20px; font-size: 14px; font-style: italic; color: var(--text-muted); line-height: 1.7; }
-  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.08s; }
-  .reveal-delay-2 { transition-delay: 0.16s; }
-  .reveal-delay-3 { transition-delay: 0.24s; }
-  .reveal-delay-4 { transition-delay: 0.32s; }
-  footer { text-align: center; padding: 44px 24px; background: var(--burgundy-deep); border-top: 1px solid rgba(201,165,80,0.15); }
-  footer p { font-style: italic; font-size: 13px; color: var(--text-dim); }
-  @media (max-width: 600px) {
-    .splash { padding: 60px 20px 80px; }
-    .countdown { gap: 10px; }
-    .countdown-num { font-size: 26px; min-width: 40px; }
-    .countdown-sep { font-size: 24px; }
-    .splash-meta { gap: 12px; }
-    .parallax-wrap { height: 180px; }
-    .container { padding: 36px 20px; }
-    .day-header { gap: 10px; }
-    .event-item { padding: 14px 16px; gap: 14px; }
-    .event-time { font-size: 16px; min-width: 50px; }
-    .rsvp-top { grid-template-columns: 1fr; gap: 24px; }
-    .rsvp-inner { padding: 40px 20px; }
-    .weather-grid { grid-template-columns: repeat(2, 1fr); }
-    .lofi-player { bottom: 16px; right: 16px; padding: 8px 12px; }
-    .lofi-info { display: none; }
-  }
-  @media (max-width: 400px) {
-    .splash-names { font-size: 36px; }
-    .countdown-num { font-size: 22px; min-width: 36px; }
-    .rsvp-row { grid-template-columns: 1fr; }
-  }
+:root {
+  --cream:#f5ede0; --gold:#c9a550; --gold-light:#e0c070;
+  --text:#f0e6d3; --muted:#c4a882; --dim:#9a7e60;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#4a1219;color:var(--text);font-family:'EB Garamond',Georgia,serif;overflow-x:hidden;}
+
+/* PASSWORD */
+#pwScreen{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(160deg,#2a0a10 0%,#5a1822 50%,#3a0e14 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px 24px;
+}
+.pw-tag{font-family:'Zen Kaku Gothic New',sans-serif;font-size:10px;letter-spacing:.6em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+.pw-names{font-family:'Shippori Mincho',serif;font-size:clamp(28px,6vw,54px);color:var(--cream);margin-bottom:4px;}
+.pw-names em{color:var(--gold);font-style:italic;font-family:'EB Garamond',serif;}
+.pw-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:16px;color:var(--muted);margin-bottom:44px;}
+.pw-rule{width:1px;height:32px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:0 auto 32px;}
+.pw-lbl{font-family:'Zen Kaku Gothic New',sans-serif;font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+.pw-input{background:rgba(255,255,255,.05);border:1px solid rgba(201,165,80,.3);color:var(--cream);font-family:'Shippori Mincho',serif;font-size:20px;letter-spacing:.3em;text-align:center;padding:13px 22px;outline:none;width:210px;transition:border-color .3s;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto;}
+.pw-input:focus{border-color:var(--gold);}
+.pw-btn{background:var(--gold);border:none;color:#2a0a10;font-family:'Zen Kaku Gothic New',sans-serif;font-size:10px;letter-spacing:.5em;text-transform:uppercase;padding:13px 34px;cursor:pointer;transition:background .3s;display:block;margin:0 auto;}
+.pw-btn:hover{background:var(--gold-light);}
+.pw-err{font-style:italic;color:#e08070;font-size:13px;margin-top:10px;min-height:18px;}
+
+/* FLIGHT */
+#flightScreen{
+  position:fixed;inset:0;z-index:9998;background:#060d18;
+  display:none;align-items:center;justify-content:center;overflow:hidden;
+}
+#flightCanvas{width:100%;height:100%;display:block;}
+.f-skip{
+  position:absolute;bottom:28px;right:28px;
+  font-family:'Zen Kaku Gothic New',sans-serif;font-size:9px;letter-spacing:.4em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);cursor:pointer;border:1px solid rgba(255,255,255,.12);padding:8px 16px;
+  transition:all .3s;
+}
+.f-skip:hover{color:var(--gold);border-color:var(--gold);}
+
+/* MAIN */
+#main{display:none;}
+
+/* LOFI */
+.lofi{
+  position:fixed;bottom:24px;left:24px;z-index:200;display:none;
+  align-items:center;gap:10px;background:rgba(60,14,20,.92);
+  border:1px solid rgba(201,165,80,.25);padding:10px 16px;backdrop-filter:blur(10px);
+}
+.lofi-btn{width:30px;height:30px;border:1px solid rgba(201,165,80,.4);background:transparent;color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.lofi-info{display:flex;flex-direction:column;gap:1px;}
+.lofi-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);}
+.lofi-sub{font-family:'EB Garamond',serif;font-style:italic;font-size:10px;color:var(--dim);}
+.lofi-bars{display:flex;align-items:flex-end;gap:2px;height:14px;}
+.lofi-bar{width:3px;background:var(--gold);opacity:.6;border-radius:1px;animation:bb .8s ease-in-out infinite alternate;}
+.lofi-bar:nth-child(1){height:5px;animation-delay:0s}
+.lofi-bar:nth-child(2){height:11px;animation-delay:.15s}
+.lofi-bar:nth-child(3){height:7px;animation-delay:.3s}
+.lofi-bar:nth-child(4){height:13px;animation-delay:.1s}
+.lofi-bar:nth-child(5){height:4px;animation-delay:.25s}
+@keyframes bb{from{transform:scaleY(.4);opacity:.4}to{transform:scaleY(1);opacity:.8}}
+.lofi-bars.paused .lofi-bar{animation-play-state:paused;}
+
+/* SPLASH */
+.splash{
+  min-height:100vh;
+  background:linear-gradient(160deg,#4a1219 0%,#6b1f2a 50%,#3d0f15 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:80px 32px 100px;position:relative;overflow:hidden;
+}
+.splash-noise{position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.012'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.petals{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.petal{position:absolute;top:-50px;opacity:0;animation:fall linear infinite;}
+.petal svg{display:block;}
+@keyframes fall{0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:0}5%{opacity:.65}50%{transform:translateY(50vh) rotate(180deg) translateX(40px)}90%{opacity:.35}100%{transform:translateY(110vh) rotate(400deg) translateX(-20px);opacity:0}}
+.petal:nth-child(1){left:7%;animation-duration:10s;animation-delay:0s;width:18px}
+.petal:nth-child(2){left:17%;animation-duration:13s;animation-delay:1.8s;width:13px}
+.petal:nth-child(3){left:28%;animation-duration:9s;animation-delay:3.2s;width:20px}
+.petal:nth-child(4){left:40%;animation-duration:12s;animation-delay:.6s;width:14px}
+.petal:nth-child(5){left:53%;animation-duration:11s;animation-delay:2.5s;width:16px}
+.petal:nth-child(6){left:63%;animation-duration:14s;animation-delay:.2s;width:11px}
+.petal:nth-child(7){left:73%;animation-duration:10s;animation-delay:4.1s;width:19px}
+.petal:nth-child(8){left:84%;animation-duration:12s;animation-delay:1.2s;width:13px}
+.petal:nth-child(9){left:23%;animation-duration:15s;animation-delay:5.5s;width:15px}
+.petal:nth-child(10){left:91%;animation-duration:11s;animation-delay:3s;width:17px}
+
+.splash-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;}
+.s-tag{font-family:'Zen Kaku Gothic New',sans-serif;font-size:10px;letter-spacing:.6em;text-transform:uppercase;color:var(--gold);margin-bottom:36px;}
+.s-names{font-family:'Shippori Mincho',serif;font-size:clamp(40px,9vw,80px);font-weight:500;letter-spacing:.05em;line-height:1.1;color:var(--cream);margin-bottom:8px;}
+.s-names em{font-style:italic;color:var(--gold-light);font-size:.82em;}
+.s-date{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(15px,2.2vw,21px);color:var(--muted);margin-bottom:36px;}
+.s-date strong{font-style:normal;color:var(--cream);font-family:'Shippori Mincho',serif;}
+.s-rule{width:1px;height:44px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin-bottom:32px;}
+.countdown{display:flex;align-items:flex-start;gap:8px;margin-bottom:44px;}
+.cd-unit{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:54px;}
+.cd-num{font-family:'Shippori Mincho',serif;font-size:clamp(28px,6vw,50px);color:var(--cream);line-height:1;}
+.cd-lbl{font-family:'Zen Kaku Gothic New',sans-serif;font-size:8px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim);}
+.cd-sep{font-family:'Shippori Mincho',serif;font-size:28px;color:var(--gold);opacity:.5;padding-top:4px;animation:blink 1s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:.5}50%{opacity:1}}
+.s-meta{display:flex;align-items:center;gap:18px;margin-bottom:40px;}
+.s-meta-item{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.s-meta-item .v{font-family:'Shippori Mincho',serif;font-size:clamp(14px,2vw,20px);color:var(--cream);}
+.s-meta-item .l{font-family:'Zen Kaku Gothic New',sans-serif;font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim);}
+.s-dot{width:4px;height:4px;background:var(--gold);opacity:.4;border-radius:50%;margin-top:2px;}
+.info-box{max-width:500px;background:rgba(0,0,0,.22);border:1px solid rgba(201,165,80,.18);border-left:2px solid var(--gold);padding:20px 24px;text-align:left;margin-bottom:40px;}
+.info-box p{font-size:14px;line-height:1.85;color:var(--muted);font-style:italic;}
+.info-box p+p{margin-top:10px;}
+.info-box strong{font-style:normal;color:var(--cream);}
+.s-cta{display:inline-block;background:var(--gold);color:#2a0a10;font-family:'Zen Kaku Gothic New',sans-serif;font-size:10px;letter-spacing:.5em;text-transform:uppercase;text-decoration:none;padding:15px 38px;transition:background .3s;}
+.s-cta:hover{background:var(--gold-light);}
+
+/* CONTENT */
+.content{background:#3d0f15;}
+.wrap{max-width:860px;margin:0 auto;padding:clamp(48px,7vw,88px) clamp(24px,6vw,70px);}
+.glow-line{height:1px;background:linear-gradient(to right,transparent,rgba(201,165,80,.7),transparent);box-shadow:0 0 10px rgba(201,165,80,.25);}
+
+/* PARALLAX */
+.par-wrap{position:relative;height:260px;overflow:hidden;}
+.par-img{position:absolute;top:-30%;left:0;width:100%;height:160%;object-fit:cover;filter:brightness(.55) saturate(.7);will-change:transform;}
+.par-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(61,15,21,.2),rgba(61,15,21,.75));}
+.par-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.par-fallback-text{font-family:'Zen Kaku Gothic New',sans-serif;font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:rgba(201,165,80,.3);}
+
+/* DAY */
+.day-hdr{display:flex;align-items:baseline;gap:16px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(201,165,80,.14);}
+.day-n{font-family:'Shippori Mincho',serif;font-size:clamp(50px,9vw,82px);font-weight:600;line-height:1;opacity:.09;color:var(--cream);flex-shrink:0;}
+.day-meta{display:flex;flex-direction:column;gap:3px;}
+.day-tag{font-family:'Zen Kaku Gothic New',sans-serif;font-size:10px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);}
+.day-title{font-family:'Shippori Mincho',serif;font-size:clamp(20px,4vw,30px);font-weight:500;color:var(--cream);}
+.day-opt{font-family:'Zen Kaku Gothic New',sans-serif;font-size:8px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim);}
+.day-intro{font-size:clamp(14px,1.7vw,16px);font-style:italic;color:var(--muted);line-height:1.75;margin-bottom:24px;max-width:560px;}
+
+/* EVENTS */
+.events{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.ev{display:flex;gap:20px;align-items:flex-start;padding:18px 20px;border-left:2px solid rgba(201,165,80,.22);background:rgba(0,0,0,.18);transition:border-color .3s,background .3s,transform .3s;}
+.ev:hover{border-left-color:var(--gold);background:rgba(0,0,0,.28);transform:translateX(3px);}
+.ev.gold{border-left-color:var(--gold);}
+.ev.dim{border-left-color:rgba(255,255,255,.08);}
+.ev-time{font-family:'Shippori Mincho',serif;font-size:17px;color:var(--gold);white-space:nowrap;min-width:56px;flex-shrink:0;}
+.ev-body{display:flex;flex-direction:column;gap:5px;width:100%;}
+.badge{display:inline-block;font-family:'Zen Kaku Gothic New',sans-serif;font-size:8px;letter-spacing:.4em;text-transform:uppercase;padding:3px 8px;align-self:flex-start;}
+.badge-gold{background:rgba(201,165,80,.1);color:var(--gold);border:1px solid rgba(201,165,80,.28);}
+.badge-dim{background:rgba(255,255,255,.03);color:var(--dim);border:1px solid rgba(255,255,255,.07);}
+.ev-name{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:500;color:var(--cream);}
+.ev-detail{font-size:14px;font-style:italic;color:var(--muted);line-height:1.7;}
+.map-pin{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-family:'Zen Kaku Gothic New',sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);text-decoration:none;border-bottom:1px solid rgba(154,126,96,.28);padding-bottom:2px;transition:color .2s,border-color .2s;}
+.map-pin:hover{color:var(--gold);border-color:var(--gold);}
+.map-pin svg{flex-shrink:0;}
+.tl{margin-top:18px;border:1px solid rgba(201,165,80,.13);background:rgba(0,0,0,.14);overflow:hidden;}
+.tl-hdr{font-family:'Zen Kaku Gothic New',sans-serif;font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);padding:13px 20px;border-bottom:1px solid rgba(201,165,80,.09);}
+.tl-row{display:flex;align-items:flex-start;gap:14px;padding:11px 20px;border-bottom:1px solid rgba(255,255,255,.035);transition:background .2s;}
+.tl-row:last-child{border-bottom:none;}
+.tl-row:hover{background:rgba(255,255,255,.02);}
+.tl-time{font-family:'Shippori Mincho',serif;font-size:14px;color:var(--gold);min-width:44px;flex-shrink:0;}
+.tl-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.38;flex-shrink:0;margin-top:5px;}
+.tl-text{font-size:13px;color:var(--muted);line-height:1.6;font-style:italic;flex:1;}
+.tl-text strong{font-style:normal;color:var(--cream);font-family:'Shippori Mincho',serif;font-size:14px;display:block;margin-bottom:1px;}
+
+/* WEATHER */
+.wx{background:rgba(0,0,0,.14);}
+.wx-inner{max-width:860px;margin:0 auto;padding:clamp(40px,6vw,70px) clamp(24px,6vw,70px);}
+.wx-hdr{font-family:'Zen Kaku Gothic New',sans-serif;font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:12px;}
+.wx-hdr::after{content:'';flex:1;height:1px;background:rgba(201,165,80,.18);}
+.wx-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.wx-card{background:rgba(0,0,0,.18);border:1px solid rgba(201,165,80,.1);padding:20px 14px;text-align:center;transition:border-color .3s,transform .3s;}
+.wx-card:hover{border-color:rgba(201,165,80,.35);transform:translateY(-3px);}
+.wx-icon{font-size:26px;margin-bottom:10px;display:block;}
+.wx-stat{font-family:'Shippori Mincho',serif;font-size:clamp(14px,2.2vw,20px);color:var(--cream);display:block;margin-bottom:3px;}
+.wx-lbl{font-family:'Zen Kaku Gothic New',sans-serif;font-size:8px;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);display:block;}
+.wx-note{margin-top:20px;font-size:14px;font-style:italic;color:var(--muted);line-height:1.7;}
+
+/* RSVP */
+.rsvp-sec{background:linear-gradient(160deg,#5a1825 0%,#6b1f2a 100%);}
+.rsvp-inner{max-width:860px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(24px,6vw,70px);}
+.rsvp-top{display:grid;grid-template-columns:1.3fr 1fr;gap:52px;align-items:start;margin-bottom:40px;}
+.rsvp-h{font-family:'Shippori Mincho',serif;font-size:clamp(24px,5vw,40px);font-weight:500;color:var(--cream);line-height:1.2;margin-bottom:12px;}
+.rsvp-p{font-size:clamp(13px,1.7vw,15px);line-height:1.85;color:var(--muted);font-style:italic;}
+.rsvp-p strong{color:var(--cream);font-style:normal;}
+.rsvp-box{border:1px solid rgba(201,165,80,.28);background:rgba(0,0,0,.14);padding:26px 22px;text-align:center;}
+.rsvp-box-lbl{font-family:'Zen Kaku Gothic New',sans-serif;font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.rsvp-box-date{font-family:'Shippori Mincho',serif;font-size:clamp(18px,3vw,28px);color:var(--cream);line-height:1.3;margin-bottom:8px;}
+.rsvp-box-sub{font-size:13px;font-style:italic;color:var(--muted);line-height:1.6;}
+.rsvp-form{display:flex;flex-direction:column;gap:11px;}
+.rsvp-row{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.inp{background:rgba(255,255,255,.065);border:1px solid rgba(201,165,80,.18);color:var(--cream);font-family:'EB Garamond',serif;font-size:16px;padding:12px 15px;outline:none;transition:border-color .3s,background .3s;width:100%;}
+.inp::placeholder{color:rgba(240,230,211,.28);font-style:italic;}
+.inp:focus{border-color:var(--gold);background:rgba(255,255,255,.09);}
+.sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a550' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;cursor:pointer;}
+.sel option{background:#4a1219;color:var(--cream);}
+.sec-lbl{font-family:'Zen Kaku Gothic New',sans-serif;font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-top:10px;padding-top:14px;border-top:1px solid rgba(201,165,80,.1);}
+.collapse{display:none;flex-direction:column;gap:10px;margin-top:4px;}
+.collapse.open{display:flex;}
+.rsvp-btn{background:var(--gold);border:none;color:#2a0a10;font-family:'Zen Kaku Gothic New',sans-serif;font-size:10px;letter-spacing:.5em;padding:15px 34px;cursor:pointer;transition:background .3s;text-transform:uppercase;align-self:flex-start;margin-top:6px;}
+.rsvp-btn:hover{background:var(--gold-light);}
+.rsvp-note{margin-top:22px;padding-top:18px;border-top:1px solid rgba(201,165,80,.1);font-size:13px;font-style:italic;color:var(--dim);line-height:1.7;}
+.confirm{display:none;flex-direction:column;gap:12px;}
+.confirm.show{display:flex;}
+.confirm-k{font-family:'Shippori Mincho',serif;font-size:56px;color:var(--gold);}
+.confirm-t{font-style:italic;color:var(--muted);font-size:17px;line-height:1.6;}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(20px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.r.on{opacity:1;transform:translateY(0);}
+.r1{transition-delay:.07s}.r2{transition-delay:.14s}.r3{transition-delay:.21s}.r4{transition-delay:.28s}
+
+footer{text-align:center;padding:40px 24px;background:#3a0e14;border-top:1px solid rgba(201,165,80,.12);}
+footer p{font-style:italic;font-size:13px;color:var(--dim);}
+
+@media(max-width:720px){.rsvp-top{grid-template-columns:1fr;gap:24px}.wx-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){
+  .splash{padding:60px 20px 80px}.countdown{gap:6px}.cd-num{font-size:24px}.cd-sep{font-size:22px}
+  .s-meta{gap:12px}.par-wrap{height:190px}.wrap{padding:36px 20px}
+  .ev{padding:13px 15px;gap:14px}.ev-time{font-size:15px;min-width:48px}
+  .rsvp-inner{padding:40px 20px}.rsvp-row{grid-template-columns:1fr}
+  .lofi{bottom:14px;left:14px;padding:7px 11px}.lofi-info{display:none}
+}
 </style>
 </head>
 <body>
-<div class="lofi-player" id="lofiPlayer">
+
+<!-- PASSWORD -->
+<div id="pwScreen">
+  <p class="pw-tag">Tokyo · November 2026</p>
+  <p class="pw-names">Jake <em>&</em> Taylor</p>
+  <p class="pw-sub">Getting married in Tokyo</p>
+  <div class="pw-rule"></div>
+  <p class="pw-lbl">Enter your access code</p>
+  <input class="pw-input" type="password" id="pwInput" placeholder="••••••">
+  <button class="pw-btn" onclick="tryPW()">Enter</button>
+  <p class="pw-err" id="pwErr"></p>
+</div>
+
+<!-- FLIGHT -->
+<div id="flightScreen">
+  <canvas id="flightCanvas"></canvas>
+  <div class="f-skip" onclick="endFlight()">Skip ↓</div>
+</div>
+
+<!-- LOFI -->
+<div class="lofi" id="lofi">
   <button class="lofi-btn" id="lofiBtn" onclick="toggleLofi()">▶</button>
   <div class="lofi-info">
     <span class="lofi-title">Now Playing</span>
     <span class="lofi-sub">Tokyo Autumn · lo-fi</span>
   </div>
   <div class="lofi-bars paused" id="lofiBars">
-    <div class="lofi-bar"></div>
-    <div class="lofi-bar"></div>
-    <div class="lofi-bar"></div>
-    <div class="lofi-bar"></div>
-    <div class="lofi-bar"></div>
+    <div class="lofi-bar"></div><div class="lofi-bar"></div>
+    <div class="lofi-bar"></div><div class="lofi-bar"></div><div class="lofi-bar"></div>
   </div>
 </div>
-<audio id="lofiAudio" loop crossorigin="anonymous">
+<audio id="audio" loop crossorigin="anonymous">
   <source src="https://stream.zeno.fm/yn62fuuqp8zuv" type="audio/mpeg">
-  <source src="https://streams.ilovemusic.de/iloveradio17.mp3" type="audio/mpeg">
 </audio>
-<div id="mainContent">
+
+<!-- MAIN -->
+<div id="main">
+
 <div class="splash">
+  <div class="splash-noise"></div>
   <div class="petals">
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(190,55,30,0.6)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(210,110,25,0.55)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(175,40,20,0.65)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(200,150,40,0.5)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(195,75,30,0.6)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(215,100,20,0.55)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(180,45,25,0.65)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(205,130,35,0.5)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(188,60,28,0.6)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
-    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(208,95,22,0.55)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(190,55,30,.6)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(210,110,25,.5)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(175,40,20,.6)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(200,150,40,.45)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(195,75,30,.55)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(215,100,20,.5)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(180,45,25,.6)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(205,130,35,.45)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(188,60,28,.55)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
+    <div class="petal"><svg viewBox="0 0 100 100" fill="rgba(208,95,22,.5)"><path d="M50 5 L53 20 C60 15 68 16 72 20 C68 22 65 26 66 32 C72 28 80 30 82 36 C76 36 71 40 72 47 C78 45 84 48 84 55 C78 52 72 54 70 60 C74 66 72 74 66 76 C65 70 60 67 54 69 L54 95 L50 100 L46 95 L46 69 C40 67 35 70 34 76 C28 74 26 66 30 60 C28 54 22 52 16 55 C16 48 22 45 28 47 C29 40 24 36 18 36 C20 30 28 28 34 32 C35 26 32 22 28 20 C32 16 40 15 47 20 Z"/></svg></div>
   </div>
-  <div class="splash-content">
-    <div class="splash-tag">Tokyo, Japan · November 2026</div>
-    <div class="splash-names">Jake <span class="splash-amp">&</span> Taylor</div>
-    <div class="splash-married">Getting married on <strong>Thursday, 5 November 2026</strong></div>
-    <div class="splash-rule"></div>
+  <div class="splash-inner">
+    <p class="s-tag">Tokyo, Japan · November 2026</p>
+    <p class="s-names">Jake <em>&</em> Taylor</p>
+    <p class="s-date">Getting married on <strong>Thursday, 5 November 2026</strong></p>
+    <div class="s-rule"></div>
     <div class="countdown">
-      <div class="countdown-unit"><div class="countdown-num" id="cd-days">--</div><div class="countdown-lbl">Days</div></div>
-      <div class="countdown-sep">:</div>
-      <div class="countdown-unit"><div class="countdown-num" id="cd-hours">--</div><div class="countdown-lbl">Hours</div></div>
-      <div class="countdown-sep">:</div>
-      <div class="countdown-unit"><div class="countdown-num" id="cd-mins">--</div><div class="countdown-lbl">Minutes</div></div>
-      <div class="countdown-sep">:</div>
-      <div class="countdown-unit"><div class="countdown-num" id="cd-secs">--</div><div class="countdown-lbl">Seconds</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-lbl">Days</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-lbl">Hours</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-lbl">Minutes</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Seconds</div></div>
     </div>
-    <div class="splash-meta">
-      <div class="splash-meta-item"><span class="val">4 – 6 Nov</span><span class="lbl">Three Days</span></div>
-      <div class="splash-meta-dot"></div>
-      <div class="splash-meta-item"><span class="val">Tokyo</span><span class="lbl">Destination</span></div>
+    <div class="s-meta">
+      <div class="s-meta-item"><span class="v">4–6 Nov</span><span class="l">Three Days</span></div>
+      <div class="s-dot"></div>
+      <div class="s-meta-item"><span class="v">Tokyo</span><span class="l">Destination</span></div>
     </div>
-    <div class="splash-purpose">
-      <p>You've already got your invite — this page has everything you need to know about the three days we've planned. Have a read, then <strong>RSVP at the bottom</strong> so we can get everything locked in. We can't wait to celebrate with you.</p>
+    <div class="info-box">
+      <p>This page is a <strong>guide to the events</strong> we have planned around our wedding. The days before and after are entirely optional — come along to as much or as little as suits you.</p>
+      <p>Please note that Japan operates differently to what many of us are used to — venues and bookings are subject to change. <strong>The ceremony on 5 November remains confirmed.</strong> We will keep you updated on anything that shifts.</p>
     </div>
-    <div class="splash-cta">
-      <a href="#rsvp">RSVP Now ↓</a>
-      <span class="splash-cta-note">We'd originally asked by 30 March — please respond when you get a chance.</span>
-    </div>
+    <a class="s-cta" href="#rsvp">RSVP ↓</a>
   </div>
 </div>
-<div class="content-wrap">
-  <div class="parallax-wrap reveal">
-    <img class="parallax-img" data-parallax src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=1400&q=80&fit=crop" alt="Brewery" onerror="this.parentElement.style.background='#3d0f15'">
-    <div class="parallax-overlay"></div>
+
+<div class="content">
+
+  <!-- DAY 1 -->
+  <div class="par-wrap r">
+    <img class="par-img" data-par
+      src="https://images.unsplash.com/photo-1569074187119-c87815b476da?w=1400&q=80&fit=crop"
+      alt="Brewery Tokyo"
+      onerror="this.style.display='none';this.nextElementSibling.nextElementSibling.style.display='flex'">
+    <div class="par-overlay"></div>
+    <div class="par-fallback" style="display:none"><span class="par-fallback-text">Daikanyama · Day One</span></div>
   </div>
-  <div class="container">
-    <div class="day-block">
-      <div class="day-header reveal">
-        <div class="day-num">1</div>
-        <div class="day-meta">
-          <div class="day-date-tag">Wednesday · 4 November</div>
-          <div class="day-title">The Day Before</div>
-        </div>
+  <div class="wrap">
+    <div class="day-hdr r">
+      <div class="day-n">1</div>
+      <div class="day-meta">
+        <div class="day-tag">Wednesday · 4 November</div>
+        <div class="day-title">The Day Before</div>
+        <div class="day-opt">Optional</div>
       </div>
-      <p class="day-intro reveal">We're getting everyone together the day before for a relaxed lunch — a chance to meet each other and ease into the trip before the big day.</p>
-      <ul class="event-list">
-        <li class="event-item hosted reveal reveal-delay-1">
-          <div class="event-time">13:00</div>
-          <div class="event-body">
-            <span class="event-badge badge-hosted">Food on us</span>
-            <span class="event-name">Spring Valley Brewery — Daikanyama</span>
-            <span class="event-detail">A great spot inside a converted rail-track building. We'll grab some pizzas to share — come hang. Drinks are self-pay — craft beer flights on iPads at the table.</span>
-            <a class="map-pin" href="https://maps.google.com/?q=Spring+Valley+Brewery+Tokyo+Daikanyama" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
-          </div>
-        </li>
-        <li class="event-item free reveal reveal-delay-2">
-          <div class="event-time">15:30</div>
-          <div class="event-body">
-            <span class="event-badge badge-free">Free time</span>
-            <span class="event-name">Explore — Daikanyama & Nakameguro</span>
-            <span class="event-detail">Two of the best neighbourhoods in Tokyo are right outside. Walk the canal, find a coffee, and rest up for tomorrow.</span>
-          </div>
-        </li>
-      </ul>
     </div>
-  </div>
-  <div class="divider"></div>
-  <div class="parallax-wrap reveal">
-    <img class="parallax-img" data-parallax src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1400&q=80&fit=crop&crop=top" alt="Tokyo" onerror="this.parentElement.style.background='#3d0f15'">
-    <div class="parallax-overlay"></div>
-  </div>
-  <div class="container">
-    <div class="day-block">
-      <div class="day-header reveal">
-        <div class="day-num">2</div>
-        <div class="day-meta">
-          <div class="day-date-tag">Thursday · 5 November</div>
-          <div class="day-title">The Wedding</div>
+    <p class="day-intro r">An opportunity to meet everyone and settle into the city before the wedding. No obligation — join us if you're around.</p>
+    <ul class="events">
+      <li class="ev gold r r1">
+        <div class="ev-time">13:00</div>
+        <div class="ev-body">
+          <span class="badge badge-gold">Food on us</span>
+          <span class="ev-name">Spring Valley Brewery — Daikanyama</span>
+          <span class="ev-detail">A relaxed lunch inside a converted rail-track building in one of Tokyo's best neighbourhoods. We'll have pizzas on the table — drinks are self-pay, with craft beer flights ordered on iPads.</span>
+          <a class="map-pin" href="https://maps.google.com/?q=Spring+Valley+Brewery+Tokyo+Daikanyama" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
         </div>
-      </div>
-      <ul class="event-list">
-        <li class="event-item hosted reveal reveal-delay-1">
-          <div class="event-time">15:00</div>
-          <div class="event-body">
-            <span class="event-badge badge-hosted">Ceremony</span>
-            <span class="event-name">Re:Place Koishikawa</span>
-            <span class="event-detail">Please arrive by 14:45. Wraps around 16:30.</span>
-            <span class="event-detail" style="margin-top:6px; color:var(--gold); font-style:normal; font-size:13px;">👔 Dress code — Smart casual. Dress how you feel good, just come looking the part. Tokyo in November is cool (10–16°C) so bring something nice to throw over the top, and wear shoes you can actually walk in — you'll be on your feet across a few venues.</span>
-            <a class="map-pin" href="https://maps.google.com/?q=Re:Place+Koishikawa+Tokyo" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
-          </div>
-        </li>
-        <li class="event-item free reveal reveal-delay-2">
-          <div class="event-time">16:30</div>
-          <div class="event-body">
-            <span class="event-name">Taxis to Shibuya</span>
-            <span class="event-detail">We'll sort the taxis — about 25 minutes across the city. All covered by us.</span>
-          </div>
-        </li>
-        <li class="event-item hosted reveal reveal-delay-3">
-          <div class="event-time">17:00</div>
-          <div class="event-body">
-            <span class="event-badge badge-hosted">Food, drinks & good times — all on us</span>
-            <span class="event-name">Afterparty — The Legian Tokyo, Shibuya <em style="font-size:12px; color:var(--text-dim); font-style:italic;">(venue TBC — confirmation pending)</em></span>
-            <span class="event-detail">12th-floor penthouse with a poolside terrace. Sunset hits right as we arrive. Unlimited food and drinks for three hours. Kids welcome. Wraps at 20:00.</span>
-            <a class="map-pin" href="https://maps.google.com/?q=The+Legian+Tokyo+Shibuya" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
-          </div>
-        </li>
-        <li class="event-item free reveal reveal-delay-4">
-          <div class="event-time">20:00</div>
-          <div class="event-body">
-            <span class="event-badge badge-free">Optional</span>
-            <span class="event-name">Wherever Tokyo Takes Us</span>
-            <span class="event-detail">For those who want to keep going — we might find a club, play some beer pong, who knows. No plans, no obligations. We'll see where the night takes us — no promises from the bride and groom.</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="divider"></div>
-  <div class="parallax-wrap reveal">
-    <img class="parallax-img" data-parallax src="https://images.unsplash.com/photo-1633113093730-47449a1a9c6e?w=1400&q=80&fit=crop" alt="teamLab" onerror="this.parentElement.style.background='#3d0f15'">
-    <div class="parallax-overlay"></div>
-  </div>
-  <div class="container">
-    <div class="day-block">
-      <div class="day-header reveal">
-        <div class="day-num">3</div>
-        <div class="day-meta">
-          <div class="day-date-tag">Friday · 6 November</div>
-          <div class="day-title">The Day After</div>
+      </li>
+      <li class="ev dim r r2">
+        <div class="ev-time">15:30</div>
+        <div class="ev-body">
+          <span class="badge badge-dim">Free</span>
+          <span class="ev-name">Daikanyama & Nakameguro</span>
+          <span class="ev-detail">Two of Tokyo's most enjoyable neighbourhoods are right outside. Worth an afternoon at your own pace.</span>
         </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="glow-line"></div>
+
+  <!-- DAY 2 -->
+  <div class="par-wrap r">
+    <img class="par-img" data-par
+      src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1400&q=80&fit=crop&crop=top"
+      alt="Tokyo skyline"
+      onerror="this.style.display='none';this.nextElementSibling.nextElementSibling.style.display='flex'">
+    <div class="par-overlay"></div>
+    <div class="par-fallback" style="display:none"><span class="par-fallback-text">Tokyo · Day Two</span></div>
+  </div>
+  <div class="wrap">
+    <div class="day-hdr r">
+      <div class="day-n">2</div>
+      <div class="day-meta">
+        <div class="day-tag">Thursday · 5 November</div>
+        <div class="day-title">The Wedding</div>
       </div>
-      <p class="day-intro reveal">Before everyone goes their own way, we'd love one last thing together — and this one's pretty special.</p>
-      <ul class="event-list">
-        <li class="event-item hosted reveal reveal-delay-1">
-          <div class="event-time">10:30</div>
-          <div class="event-body">
-            <span class="event-badge badge-hosted">We've got your ticket</span>
-            <span class="event-name">teamLab Borderless — Azabudai Hills</span>
-            <span class="event-detail">Come join us at teamLab Borderless — one of the most impressive things you can do in Tokyo. Immersive digital art across multiple rooms. We'll be booking all 22 of us together as a group and will send details closer to the date.</span>
-            <a class="map-pin" href="https://maps.google.com/?q=teamLab+Borderless+Azabudai+Hills+Tokyo" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
-          </div>
-        </li>
-        <li class="event-item free reveal reveal-delay-2">
-          <div class="event-time">13:00</div>
-          <div class="event-body">
-            <span class="event-name">% Arabica — Azabudai Hills</span>
-            <span class="event-detail">Coffee right next door. Grab a seat on the terrace or the park outside. No plans, just a coffee and a debrief.</span>
-            <a class="map-pin" href="https://maps.google.com/?q=%25+Arabica+Azabudai+Hills+Tokyo" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
-          </div>
-        </li>
-        <li class="event-item free reveal reveal-delay-3">
-          <div class="event-time">14:30</div>
-          <div class="event-body">
-            <span class="event-name">Tokyo Tower — Farewell Photo</span>
-            <span class="event-detail">10-minute walk. Group photo at the base, then everyone's free to head off. A good way to end the trip.</span>
-            <a class="map-pin" href="https://maps.google.com/?q=Tokyo+Tower" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
-          </div>
-        </li>
-      </ul>
     </div>
+    <ul class="events">
+      <li class="ev gold r r1">
+        <div class="ev-time">12:30</div>
+        <div class="ev-body">
+          <span class="badge badge-gold">Ceremony</span>
+          <span class="ev-name">Re:Place Koishikawa</span>
+          <span class="ev-detail">Doors open at 12:30. The ceremony will begin at 12:45, with two Japanese traditions woven in as a nod to the city. Smart casual — feel free to dress as you feel most comfortable whilst looking the part. A layer is recommended for the cool afternoon.</span>
+          <a class="map-pin" href="https://maps.google.com/?q=Re:Place+Koishikawa+Tokyo" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
+          <div class="tl">
+            <div class="tl-hdr">Order of the Day</div>
+            <div class="tl-row"><span class="tl-time">12:45</span><div class="tl-dot"></div><div class="tl-text"><strong>Ceremony</strong>Celebrant-led, with two Japanese traditions woven in.</div></div>
+            <div class="tl-row"><span class="tl-time">13:30</span><div class="tl-dot"></div><div class="tl-text"><strong>Group Photos</strong>Family and friends on the property — approximately 45 minutes.</div></div>
+            <div class="tl-row"><span class="tl-time">14:15</span><div class="tl-dot"></div><div class="tl-text"><strong>Drinks & Canapés</strong>Everyone together on the property. Take a breath, celebrate, enjoy the afternoon.</div></div>
+            <div class="tl-row"><span class="tl-time">14:45</span><div class="tl-dot"></div><div class="tl-text"><strong>Afternoon — Your Time</strong>Guests are welcome to remain on the property or head off ahead of the evening.</div></div>
+            <div class="tl-row"><span class="tl-time">17:00</span><div class="tl-dot"></div><div class="tl-text"><strong>The Legian Tokyo, Shibuya</strong>Afterparty begins.</div></div>
+          </div>
+        </div>
+      </li>
+      <li class="ev gold r r2">
+        <div class="ev-time">17:00</div>
+        <div class="ev-body">
+          <span class="badge badge-gold">All on us</span>
+          <span class="ev-name">Afterparty — The Legian Tokyo <em style="font-size:12px;color:var(--dim);font-style:italic;">(confirmation pending)</em></span>
+          <span class="ev-detail">12th-floor penthouse in Shibuya with a poolside terrace and indoor lounge. Sunset arrives right as we do. Unlimited food and drinks for three hours. Children are welcome. Wraps at 20:00.</span>
+          <a class="map-pin" href="https://maps.google.com/?q=The+Legian+Tokyo+Shibuya" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
+        </div>
+      </li>
+      <li class="ev dim r r3">
+        <div class="ev-time">20:00</div>
+        <div class="ev-body">
+          <span class="badge badge-dim">Optional</span>
+          <span class="ev-name">Wherever the Night Takes Us</span>
+          <span class="ev-detail">For those who wish to continue — we may find a bar, play some beer pong, or simply wander. No obligations, no promises from the bride and groom.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="glow-line"></div>
+
+  <!-- DAY 3 -->
+  <div class="par-wrap r">
+    <img class="par-img" data-par
+      src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80&fit=crop"
+      alt="teamLab"
+      onerror="this.style.display='none';this.nextElementSibling.nextElementSibling.style.display='flex'">
+    <div class="par-overlay"></div>
+    <div class="par-fallback" style="display:none"><span class="par-fallback-text">Roppongi Hills · Day Three</span></div>
+  </div>
+  <div class="wrap">
+    <div class="day-hdr r">
+      <div class="day-n">3</div>
+      <div class="day-meta">
+        <div class="day-tag">Friday · 6 November</div>
+        <div class="day-title">The Day After</div>
+        <div class="day-opt">Optional</div>
+      </div>
+    </div>
+    <p class="day-intro r">One final thing together before everyone heads off — and it's worth staying for.</p>
+    <ul class="events">
+      <li class="ev dim r r1">
+        <div class="ev-time">13:00</div>
+        <div class="ev-body">
+          <span class="ev-name">% Arabica — Azabudai Hills</span>
+          <span class="ev-detail">Meet us for a coffee before we head in. One of the most beautifully designed cafés in Tokyo. Terrace seating or the Central Green park next door. Come when you're ready.</span>
+          <a class="map-pin" href="https://maps.google.com/?q=%25+Arabica+Azabudai+Hills+Tokyo" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
+        </div>
+      </li>
+      <li class="ev gold r r2">
+        <div class="ev-time">14:00</div>
+        <div class="ev-body">
+          <span class="badge badge-gold">Tickets on us</span>
+          <span class="ev-name">teamLab Borderless Mori — Roppongi Hills</span>
+          <span class="ev-detail">An immersive digital art experience across multiple rooms — one of the most impressive things you can do in Tokyo. We will coordinate the group booking and share details closer to the date.</span>
+          <a class="map-pin" href="https://maps.google.com/?q=teamLab+Borderless+Mori+Building+Roppongi+Hills+Tokyo" target="_blank"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>Open in Maps</a>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
-<div class="divider" style="background: linear-gradient(to right, transparent, rgba(201,165,80,0.15), transparent);"></div>
-<div class="weather-section">
-  <div class="weather-inner">
-    <div class="weather-heading">🍂 &nbsp; Tokyo in November — What to Expect</div>
-    <div class="weather-grid">
-      <div class="weather-card"><span class="weather-icon">🌡️</span><span class="weather-stat">10–17°C</span><span class="weather-lbl">Temperature</span></div>
-      <div class="weather-card"><span class="weather-icon">☀️</span><span class="weather-stat">Crisp & Clear</span><span class="weather-lbl">Conditions</span></div>
-      <div class="weather-card"><span class="weather-icon">🍁</span><span class="weather-stat">Peak Autumn</span><span class="weather-lbl">Foliage</span></div>
-      <div class="weather-card"><span class="weather-icon">🌂</span><span class="weather-stat">Low</span><span class="weather-lbl">Rain Chance</span></div>
+
+<div class="glow-line"></div>
+
+<!-- WEATHER -->
+<div class="wx">
+  <div class="wx-inner">
+    <div class="wx-hdr">Tokyo in November — What to Expect</div>
+    <div class="wx-grid">
+      <div class="wx-card r"><span class="wx-icon">🌡️</span><span class="wx-stat">10–17°C</span><span class="wx-lbl">Temperature</span></div>
+      <div class="wx-card r r1"><span class="wx-icon">🍂</span><span class="wx-stat">Late Autumn</span><span class="wx-lbl">Season</span></div>
+      <div class="wx-card r r2"><span class="wx-icon">☀️</span><span class="wx-stat">Crisp & Dry</span><span class="wx-lbl">Conditions</span></div>
+      <div class="wx-card r r3"><span class="wx-icon">🌂</span><span class="wx-stat">Low</span><span class="wx-lbl">Rain Chance</span></div>
     </div>
-    <p class="weather-note">November is one of the best times to be in Tokyo — cool, dry, and absolutely beautiful with the autumn leaves. Mornings and evenings get cold (8–10°C), so bring a proper jacket. Afternoons are lovely. Pack layers you can add and remove easily.</p>
+    <p class="wx-note r">November is one of the best times to visit Tokyo — cool, largely dry, and still beautiful as the autumn colour winds down. Mornings and evenings drop to around 8–10°C, so a proper jacket is worthwhile. Afternoons are mild and comfortable.</p>
   </div>
 </div>
-<div class="divider" style="background: linear-gradient(to right, transparent, rgba(201,165,80,0.15), transparent);"></div>
-<div class="rsvp-section" id="rsvp">
+
+<div class="glow-line"></div>
+
+<!-- RSVP -->
+<div class="rsvp-sec" id="rsvp">
   <div class="rsvp-inner">
     <div class="rsvp-top">
       <div>
-        <div class="rsvp-heading">Can you make it?<br>Let us know below.</div>
-        <p class="rsvp-why">We'd originally asked for responses by <strong>30 March</strong> — if you haven't had a chance yet, we'd really appreciate hearing from you as soon as possible. We need final numbers to confirm our booking with <strong>The Legian Tokyo</strong>, and we'd love to know you're coming.</p>
+        <div class="rsvp-h">Can you make it?<br>Let us know.</div>
+        <p class="rsvp-p">We need to finalise numbers for all three venues — the brewery, the Legian, and teamLab. <strong>Your response as soon as possible would mean a great deal.</strong></p>
       </div>
-      <div class="rsvp-urgency">
-        <div class="rsvp-urgency-label">Respond by</div>
-        <div class="rsvp-urgency-date">As soon<br>as possible</div>
-        <div class="rsvp-urgency-sub">We'd love to hear from you soon.<br>5 November 2026.</div>
+      <div class="rsvp-box">
+        <div class="rsvp-box-lbl">Please respond</div>
+        <div class="rsvp-box-date">As soon<br>as possible</div>
+        <div class="rsvp-box-sub">5 November 2026 · Tokyo.</div>
       </div>
     </div>
+
     <div class="rsvp-form" id="rsvpForm">
       <div class="rsvp-row">
-        <input class="rsvp-input" type="text" placeholder="Your first name" id="fname">
-        <input class="rsvp-input" type="text" placeholder="Your last name" id="lname">
+        <input class="inp" type="text" placeholder="First name" id="fname">
+        <input class="inp" type="text" placeholder="Last name" id="lname">
       </div>
-      <select class="rsvp-input rsvp-select" id="attendance">
-        <option value="" disabled selected>Are you able to come?</option>
-        <option value="yes">Yes — can't wait!</option>
-        <option value="no">Sorry, I won't be able to make it</option>
+      <input class="inp" type="text" placeholder="Who are you bringing?" id="guestnames">
+      <select class="inp sel" id="attendance">
+        <option value="" disabled selected>Will you be attending the wedding?</option>
+        <option value="yes">Yes — looking forward to it</option>
+        <option value="no">Unfortunately I won't be able to make it</option>
       </select>
-      <input class="rsvp-input" type="text" placeholder="Who are you bringing? (names of your party)" id="guestnames">
-      <select class="rsvp-input rsvp-select" id="guests">
-        <option value="" disabled selected>How many in your party?</option>
-        <option value="1">Just me</option>
-        <option value="2">2 people</option>
-        <option value="3">3 (including kids)</option>
-        <option value="4">4 (including kids)</option>
+
+      <div class="sec-lbl">Spring Valley Brewery · 4 November</div>
+      <select class="inp sel" id="brewery-yn" onchange="tog('brewery-yn','brewery-x')">
+        <option value="" disabled selected>Will you join us for lunch?</option>
+        <option value="yes">Yes, we'll be there</option>
+        <option value="no">We won't make the lunch</option>
       </select>
-      <select class="rsvp-input rsvp-select" id="dietary">
-        <option value="" disabled selected>Any dietary requirements?</option>
-        <option value="none">No restrictions</option>
-        <option value="vegetarian">Vegetarian</option>
-        <option value="vegan">Vegan</option>
-        <option value="halal">Halal</option>
-        <option value="gluten">Gluten free</option>
-        <option value="other">Other — see notes below</option>
+      <div class="collapse" id="brewery-x">
+        <select class="inp sel" id="brewery-n">
+          <option value="" disabled selected>How many attending?</option>
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+        </select>
+      </div>
+
+      <div class="sec-lbl">The Legian Tokyo · 5 November</div>
+      <select class="inp sel" id="legian-yn" onchange="tog('legian-yn','legian-x')">
+        <option value="" disabled selected>Will you join us at the afterparty?</option>
+        <option value="yes">Yes, we'll be there</option>
+        <option value="no">We won't make the afterparty</option>
       </select>
-      <input class="rsvp-input" type="text" placeholder="Song request — what should we play? 🎵" id="song">
-      <textarea class="rsvp-input" rows="2" placeholder="Anything else we should know..." id="notes" style="resize:vertical; font-family:'EB Garamond',serif; font-style:italic;"></textarea>
-      <button class="rsvp-btn" onclick="submitRsvp()">Send RSVP</button>
+      <div class="collapse" id="legian-x">
+        <select class="inp sel" id="legian-n">
+          <option value="" disabled selected>How many attending?</option>
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+        </select>
+        <select class="inp sel" id="dietary">
+          <option value="" disabled selected>Any dietary requirements?</option>
+          <option value="none">None</option>
+          <option value="vegetarian">Vegetarian</option>
+          <option value="vegan">Vegan</option>
+          <option value="halal">Halal</option>
+          <option value="gluten">Gluten free</option>
+          <option value="other">Other — please note below</option>
+        </select>
+        <input class="inp" type="text" placeholder="Song request(s) for the evening 🎵" id="song">
+      </div>
+
+      <div class="sec-lbl">teamLab Borderless Mori · 6 November</div>
+      <select class="inp sel" id="tl-yn" onchange="tog('tl-yn','tl-x')">
+        <option value="" disabled selected>Will you join us at teamLab?</option>
+        <option value="yes">Yes, we'd love to come</option>
+        <option value="no">We won't be able to make teamLab</option>
+      </select>
+      <div class="collapse" id="tl-x">
+        <select class="inp sel" id="tl-n">
+          <option value="" disabled selected>How many attending?</option>
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+        </select>
+      </div>
+
+      <div class="sec-lbl" style="margin-top:8px">Anything Else</div>
+      <textarea class="inp" rows="3" id="notes" placeholder="Any other notes, questions, or things we should know..." style="resize:vertical;font-family:'EB Garamond',serif;font-style:italic;margin-top:4px"></textarea>
+      <button class="rsvp-btn" onclick="submitRSVP()">Send RSVP</button>
+      <p class="rsvp-note">Should we not hear from you, we will kindly assume you are unable to join us — we completely understand, and hope to celebrate with you another time.</p>
     </div>
-    <div class="rsvp-confirm" id="rsvpConfirm">
-      <div class="confirm-kanji">ありがとう</div>
-      <p class="confirm-text">Thank you so much — we'll be in touch soon!</p>
+
+    <div class="confirm" id="conf">
+      <div class="confirm-k">ありがとう</div>
+      <p class="confirm-t">Thank you — we'll be in touch soon.</p>
     </div>
   </div>
 </div>
-<footer>
-  <p>Jake & Taylor · Tokyo, November 2026 · Reach out directly if you have any questions.</p>
-</footer>
+
+<footer><p>Jake & Taylor · Tokyo, November 2026 · Reach out directly with any questions.</p></footer>
 </div>
+
 <script>
-  let lofiPlaying = false;
-  function toggleLofi() {
-    const audio = document.getElementById('lofiAudio');
-    const btn = document.getElementById('lofiBtn');
-    const bars = document.getElementById('lofiBars');
-    if (lofiPlaying) {
-      audio.pause(); btn.textContent = '▶'; bars.classList.add('paused'); lofiPlaying = false;
+// PASSWORD
+document.getElementById('pwInput').addEventListener('keydown', e => { if(e.key==='Enter') tryPW(); });
+function tryPW(){
+  if(document.getElementById('pwInput').value.trim().toUpperCase()==='JT2026'){
+    const s=document.getElementById('pwScreen');
+    s.style.transition='opacity .5s'; s.style.opacity='0';
+    setTimeout(()=>{ s.style.display='none'; startFlight(); },500);
+  } else {
+    document.getElementById('pwErr').textContent="That's not quite right — try again.";
+    document.getElementById('pwInput').value='';
+    document.getElementById('pwInput').style.borderColor='#e08070';
+    setTimeout(()=>document.getElementById('pwInput').style.borderColor='',1500);
+  }
+}
+
+// FLIGHT - TWO PLANES: Perth and Sydney both fly to Tokyo
+let flightDone=false;
+function startFlight(){
+  flightDone=false;
+  const fs=document.getElementById('flightScreen');
+  fs.style.display='flex'; fs.style.opacity='1';
+  const canvas=document.getElementById('flightCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const W=canvas.width, H=canvas.height;
+
+  // City positions — Australia only + Japan
+  const PERTH  = {x:W*0.195, y:H*0.72,  label:'Perth,\nAustralia'};
+  const SYDNEY = {x:W*0.255, y:H*0.745, label:'Sydney,\nAustralia'};
+  const TOKYO  = {x:W*0.82,  y:H*0.30,  label:'Tokyo,\nJapan'};
+
+  // Trail storage
+  const trailP=[], trailS=[];
+
+  function drawMap(){
+    ctx.clearRect(0,0,W,H);
+    // Ocean
+    const bg=ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,'#060e1e'); bg.addColorStop(1,'#0a1628');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    // Latitude grid
+    ctx.strokeStyle='rgba(80,140,220,.05)'; ctx.lineWidth=.8;
+    for(let i=0;i<H;i+=H/10){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke();}
+    for(let i=0;i<W;i+=W/16){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke();}
+
+    // Draw simplified landmasses — only Australia and Japan for focus
+    ctx.fillStyle='rgba(20,38,60,.9)';
+    ctx.strokeStyle='rgba(60,110,180,.2)'; ctx.lineWidth=1;
+
+    // Australia - rough outline
+    ctx.beginPath();
+    ctx.moveTo(W*.15,H*.65);
+    ctx.bezierCurveTo(W*.17,H*.60,W*.22,H*.58,W*.27,H*.60);
+    ctx.bezierCurveTo(W*.32,H*.62,W*.34,H*.65,W*.33,H*.70);
+    ctx.bezierCurveTo(W*.32,H*.76,W*.28,H*.80,W*.26,H*.82);
+    ctx.bezierCurveTo(W*.22,H*.83,W*.18,H*.80,W*.16,H*.76);
+    ctx.bezierCurveTo(W*.13,H*.72,W*.13,H*.68,W*.15,H*.65);
+    ctx.fill(); ctx.stroke();
+
+    // Western Australia highlight (Perth side)
+    ctx.fillStyle='rgba(25,45,72,.6)';
+    ctx.beginPath();
+    ctx.moveTo(W*.15,H*.65);
+    ctx.bezierCurveTo(W*.17,H*.60,W*.21,H*.59,W*.22,H*.63);
+    ctx.bezierCurveTo(W*.22,H*.70,W*.20,H*.78,W*.18,H*.79);
+    ctx.bezierCurveTo(W*.16,H*.78,W*.14,H*.74,W*.15,H*.65);
+    ctx.fill();
+
+    // Japan - elongated island chain
+    ctx.fillStyle='rgba(20,38,60,.9)';
+    ctx.strokeStyle='rgba(60,110,180,.2)';
+    ctx.beginPath();
+    ctx.ellipse(W*.82,H*.28,W*.012,H*.055,-.3,0,Math.PI*2);
+    ctx.fill(); ctx.stroke();
+    ctx.beginPath();
+    ctx.ellipse(W*.80,H*.35,W*.008,H*.03,-.2,0,Math.PI*2);
+    ctx.fill(); ctx.stroke();
+    // Hokkaido
+    ctx.beginPath();
+    ctx.ellipse(W*.835,H*.21,W*.015,H*.025,-.1,0,Math.PI*2);
+    ctx.fill(); ctx.stroke();
+
+    // Asian continent edge (faint)
+    ctx.fillStyle='rgba(18,34,55,.7)';
+    ctx.beginPath();
+    ctx.moveTo(W*.70,H*0);
+    ctx.bezierCurveTo(W*.78,H*.05,W*.82,H*.12,W*.80,H*.20);
+    ctx.bezierCurveTo(W*.78,H*.25,W*.74,H*.28,W*.70,H*.30);
+    ctx.lineTo(W*.65,H*.25); ctx.lineTo(W*.65,H*0);
+    ctx.fill();
+
+    // SE Asia faint
+    ctx.fillStyle='rgba(18,34,55,.5)';
+    ctx.beginPath();
+    ctx.ellipse(W*.64,H*.52,W*.04,H*.06,0,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+
+  function bezierPt(p0,cp,p1,t){
+    const t1=1-t;
+    return {x:t1*t1*p0.x+2*t1*t*cp.x+t*t*p1.x, y:t1*t1*p0.y+2*t1*t*cp.y+t*t*p1.y};
+  }
+
+  // Control points for arcs
+  const cpPerth  = {x:lerp(PERTH.x,TOKYO.x,.4),  y:lerp(PERTH.y,TOKYO.y,.5)-H*.22};
+  const cpSydney = {x:lerp(SYDNEY.x,TOKYO.x,.5),  y:lerp(SYDNEY.y,TOKYO.y,.5)-H*.25};
+
+  function drawPlane(x,y,angle,color){
+    ctx.save();
+    ctx.translate(x,y); ctx.rotate(angle);
+    ctx.shadowColor=color; ctx.shadowBlur=14;
+    ctx.fillStyle='white';
+    // Body
+    ctx.beginPath(); ctx.moveTo(11,0); ctx.lineTo(-7,4); ctx.lineTo(-5,0); ctx.lineTo(-7,-4); ctx.closePath(); ctx.fill();
+    // Wings
+    ctx.beginPath(); ctx.moveTo(2,-1); ctx.lineTo(-2,-8); ctx.lineTo(-5,-7); ctx.lineTo(-4,-1); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(2,1); ctx.lineTo(-2,8); ctx.lineTo(-5,7); ctx.lineTo(-4,1); ctx.closePath(); ctx.fill();
+    // Tail
+    ctx.beginPath(); ctx.moveTo(-5,0); ctx.lineTo(-8,-4); ctx.lineTo(-7,0); ctx.lineTo(-8,4); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawTrail(trail, color){
+    if(trail.length<2) return;
+    for(let i=1;i<trail.length;i++){
+      const alpha=Math.min((i/trail.length)*0.6, 0.4);
+      ctx.strokeStyle=color.replace('1)',`${alpha})`);
+      ctx.lineWidth=1.2;
+      ctx.setLineDash([3,5]);
+      ctx.beginPath(); ctx.moveTo(trail[i-1].x,trail[i-1].y); ctx.lineTo(trail[i].x,trail[i].y); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  function drawCity(city, alpha, active){
+    if(alpha<=0) return;
+    if(active){
+      const gr=ctx.createRadialGradient(city.x,city.y,0,city.x,city.y,20);
+      gr.addColorStop(0,`rgba(201,165,80,${.4*alpha})`);
+      gr.addColorStop(1,'rgba(201,165,80,0)');
+      ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(city.x,city.y,20,0,Math.PI*2); ctx.fill();
+    }
+    ctx.fillStyle=`rgba(201,165,80,${alpha})`;
+    ctx.beginPath(); ctx.arc(city.x,city.y,3.5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='white'; ctx.beginPath(); ctx.arc(city.x,city.y,1.8,0,Math.PI*2); ctx.fill();
+    ctx.font=`${Math.max(W*.009,9)}px 'Zen Kaku Gothic New',sans-serif`;
+    ctx.fillStyle=`rgba(201,165,80,${alpha})`;
+    const lines=city.label.split('\n');
+    lines.forEach((line,i)=>{ ctx.fillText(line, city.x+8, city.y-6+i*13); });
+  }
+
+  // TIMING:
+  // 0-0.15: map appears, Perth & Sydney fade in
+  // 0.15-0.75: both planes fly simultaneously to Tokyo
+  // 0.75-0.88: both arrive, Tokyo pulses
+  // 0.88-1.0: final text
+  const DUR=6000;
+  let startT=null;
+
+  function frame(ts){
+    if(flightDone) return;
+    if(!startT) startT=ts;
+    const p=Math.min((ts-startT)/DUR,1);
+
+    drawMap();
+
+    // City alphas
+    const mapAlpha=Math.min(p/.1,1);
+    const perthAlpha=Math.min(Math.max((p-.05)/.1,0),1);
+    const sydAlpha=Math.min(Math.max((p-.08)/.1,0),1);
+    const tokyoAlpha=p>.65?Math.min((p-.65)/.1,1):0;
+    const tokyoActive=p>.75;
+
+    // Plane positions
+    let perthPt, sydPt, perthAngle=0, sydAngle=0;
+
+    if(p<0.15){
+      perthPt={x:PERTH.x,y:PERTH.y};
+      sydPt={x:SYDNEY.x,y:SYDNEY.y};
     } else {
-      audio.play().catch(() => {}); btn.textContent = '▌▌'; bars.classList.remove('paused'); lofiPlaying = true;
+      const t=ease(Math.min((p-.15)/.6,1));
+      perthPt=bezierPt(PERTH,cpPerth,TOKYO,t);
+      sydPt=bezierPt(SYDNEY,cpSydney,TOKYO,t);
+      // Calculate angles from derivative
+      const dt=.01;
+      const tp1=bezierPt(PERTH,cpPerth,TOKYO,Math.min(t+dt,1));
+      const ts1=bezierPt(SYDNEY,cpSydney,TOKYO,Math.min(t+dt,1));
+      perthAngle=Math.atan2(tp1.y-perthPt.y,tp1.x-perthPt.x);
+      sydAngle=Math.atan2(ts1.y-sydPt.y,ts1.x-sydPt.x);
+      if(t>0&&t<1){
+        if(!trailP.length||Math.hypot(perthPt.x-trailP[trailP.length-1].x,perthPt.y-trailP[trailP.length-1].y)>5) trailP.push({...perthPt});
+        if(!trailS.length||Math.hypot(sydPt.x-trailS[trailS.length-1].x,sydPt.y-trailS[trailS.length-1].y)>5) trailS.push({...sydPt});
+      }
     }
+
+    drawTrail(trailP,'rgba(201,165,80,1)');
+    drawTrail(trailS,'rgba(130,200,255,1)');
+    drawCity(PERTH, perthAlpha*mapAlpha, p<.65);
+    drawCity(SYDNEY, sydAlpha*mapAlpha, p<.65);
+    drawCity(TOKYO, tokyoAlpha, tokyoActive);
+
+    if(p>.13){
+      drawPlane(perthPt.x,perthPt.y,perthAngle,'rgba(201,165,80,.8)');
+    }
+    if(p>.14){
+      drawPlane(sydPt.x,sydPt.y,sydAngle,'rgba(130,200,255,.8)');
+    }
+
+    // Legend
+    if(p>.12){
+      const la=Math.min((p-.12)/.08,1);
+      ctx.font=`${Math.max(W*.008,8)}px 'Zen Kaku Gothic New',sans-serif`;
+      ctx.fillStyle=`rgba(201,165,80,${la*.8})`;
+      ctx.fillText('— Perth guests', W*.04, H*.94);
+      ctx.fillStyle=`rgba(130,200,255,${la*.8})`;
+      ctx.fillText('— Sydney guests', W*.04, H*.97);
+    }
+
+    // Final text
+    if(p>.86){
+      const ta=Math.min((p-.86)/.1,1);
+      ctx.save();
+      ctx.globalAlpha=ta;
+      ctx.textAlign='center';
+      ctx.font=`${W*.013}px 'EB Garamond',serif`;
+      ctx.fillStyle='rgba(201,165,80,.9)';
+      ctx.fontStyle='italic';
+      ctx.fillText("We're getting married in", W/2, H*.32);
+      ctx.font=`${W*.038}px 'Shippori Mincho',serif`;
+      ctx.fillStyle='white';
+      ctx.fillText('Tokyo', W/2, H*.40);
+      ctx.font=`${W*.009}px 'Zen Kaku Gothic New',sans-serif`;
+      ctx.fillStyle='rgba(201,165,80,.7)';
+      ctx.fillText('5 NOVEMBER 2026', W/2, H*.45);
+      ctx.textAlign='left';
+      ctx.restore();
+    }
+
+    if(p>=1){ setTimeout(endFlight,700); flightDone=true; return; }
+    requestAnimationFrame(frame);
   }
-  window.addEventListener('DOMContentLoaded', function() {
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-    reveals.forEach(r => observer.observe(r));
-    function updateCountdown() {
-      const wedding = new Date('2026-11-05T15:00:00+09:00');
-      const now = new Date();
-      const diff = wedding - now;
-      if (diff <= 0) { ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '🎉'); return; }
-      document.getElementById('cd-days').textContent = String(Math.floor(diff / 86400000)).padStart(2,'0');
-      document.getElementById('cd-hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
-      document.getElementById('cd-mins').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
-      document.getElementById('cd-secs').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    const parallaxImgs = document.querySelectorAll('[data-parallax]');
-    function onScroll() {
-      parallaxImgs.forEach(img => {
-        const rect = img.parentElement.getBoundingClientRect();
-        img.style.transform = `translateY(${(rect.top + rect.height/2 - window.innerHeight/2) * 0.25}px)`;
-      });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  });
-  function submitRsvp() {
-    const fname = document.getElementById('fname').value.trim();
-    const attendance = document.getElementById('attendance').value;
-    if (!fname || !attendance) { document.getElementById('fname').style.borderColor = '#c9a550'; return; }
-    const data = {
-      firstName: fname,
-      lastName: document.getElementById('lname').value,
-      attendance: attendance,
-      guests: document.getElementById('guestnames').value,
-      partySize: document.getElementById('guests').value,
-      dietary: document.getElementById('dietary').value,
-      song: document.getElementById('song').value,
-      notes: document.getElementById('notes').value
-    };
-    fetch('https://formspree.io/f/xnjwpwaw', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-    .then(() => {
-      document.getElementById('rsvpForm').style.display = 'none';
-      document.getElementById('rsvpConfirm').classList.add('visible');
-    })
-    .catch(() => {
-      document.getElementById('rsvpForm').style.display = 'none';
-      document.getElementById('rsvpConfirm').classList.add('visible');
-    });
+  requestAnimationFrame(frame);
+}
+
+function endFlight(){
+  const fs=document.getElementById('flightScreen');
+  fs.style.transition='opacity .8s'; fs.style.opacity='0';
+  setTimeout(()=>{
+    fs.style.display='none';
+    document.getElementById('main').style.display='block';
+    document.getElementById('lofi').style.display='flex';
+    initMain();
+  },800);
+}
+
+// LOFI
+let playing=false;
+function toggleLofi(){
+  const a=document.getElementById('audio'),b=document.getElementById('lofiBtn'),bars=document.getElementById('lofiBars');
+  if(playing){a.pause();b.textContent='▶';bars.classList.add('paused');playing=false;}
+  else{a.play().catch(()=>{});b.textContent='▌▌';bars.classList.remove('paused');playing=true;}
+}
+
+// COLLAPSE
+function tog(sid,cid){ document.getElementById(cid).classList.toggle('open',document.getElementById(sid).value==='yes'); }
+
+// INIT
+function initMain(){
+  // Reveal
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);} });
+  },{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+  document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+  // Countdown
+  function tick(){
+    const diff=new Date('2026-11-05T12:45:00+09:00')-new Date();
+    if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='🎉');return;}
+    document.getElementById('cd-d').textContent=String(Math.floor(diff/86400000)).padStart(2,'0');
+    document.getElementById('cd-h').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
+    document.getElementById('cd-m').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');
+    document.getElementById('cd-s').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0');
   }
+  tick(); setInterval(tick,1000);
+
+  // Parallax
+  const pars=document.querySelectorAll('[data-par]');
+  function onScroll(){ pars.forEach(img=>{ const r=img.parentElement.getBoundingClientRect(); img.style.transform=`translateY(${(r.top+r.height/2-window.innerHeight/2)*.25}px)`; }); }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+}
+
+// RSVP — only requires first name
+function submitRSVP(){
+  const fname=document.getElementById('fname').value.trim();
+  if(!fname){
+    document.getElementById('fname').style.borderColor='#c9a550';
+    document.getElementById('fname').focus();
+    return;
+  }
+  const payload={
+    firstName:fname,
+    lastName:document.getElementById('lname').value,
+    attendance:document.getElementById('attendance').value,
+    guests:document.getElementById('guestnames').value,
+    breweryAttending:document.getElementById('brewery-yn').value,
+    breweryCount:document.getElementById('brewery-n').value,
+    legianAttending:document.getElementById('legian-yn').value,
+    legianCount:document.getElementById('legian-n').value,
+    dietary:document.getElementById('dietary').value,
+    song:document.getElementById('song').value,
+    teamlabAttending:document.getElementById('tl-yn').value,
+    teamlabCount:document.getElementById('tl-n').value,
+    notes:document.getElementById('notes').value
+  };
+  fetch('https://formspree.io/f/xnjwpwaw',{
+    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)
+  }).then(()=>{ document.getElementById('rsvpForm').style.display='none'; document.getElementById('conf').classList.add('show'); })
+    .catch(()=>{ document.getElementById('rsvpForm').style.display='none'; document.getElementById('conf').classList.add('show'); });
+}
 </script>
 </body>
 </html>
